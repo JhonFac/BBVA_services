@@ -6,6 +6,7 @@ from app import views
 router = DefaultRouter()
 
 urlpatterns = [
-    path("list", views.list.as_view(), name="list"),
-
+    path("list", views.list.as_view(), name="List Methond"),
+    path("manifest", views.Manifest.as_view(), name="Manifest"),
+    path("payment", views.Payment.as_view(), name="Payment"),
 ]
