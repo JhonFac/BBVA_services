@@ -8,3 +8,4 @@ django-cors-headers==3.13.0
 django-filter==22.1
 djangorestframework
 drf-yasg==1.21.3
+drf-yasg2

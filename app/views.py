@@ -7,19 +7,20 @@ from rest_framework.views import APIView
 class list(APIView):
 
     # listar listar
-    def get(self, *args):
-        return Response({
-    "paymentMethods": [
-        "BankInvoice",
-        "DebitCard",
-        "Pix",
-        "CreditCard",
-        "Promissories",
-        "Privatelabels",
-        "Cobranded",
-        "Cash"
-            ]
-        })
+    def get(self, request, data=""):
+        return Response(data)
+    #     return Response({
+    # "paymentMethods": [
+    #     "BankInvoice",
+    #     "DebitCard",
+    #     "Pix",
+    #     "CreditCard",
+    #     "Promissories",
+    #     "Privatelabels",
+    #     "Cobranded",
+    #     "Cash"
+    #         ]
+    #     })
 
 
 class Manifest(APIView):
