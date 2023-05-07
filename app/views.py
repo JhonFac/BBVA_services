@@ -71,36 +71,41 @@ class ManifestViewSet(APIView):
 
     def get(self, *args):
         return Response({
-    "paymentMethods": [
-      {
-        "name": "Visa", 			
-        "allowsSplit": "onCapture" 
-      }, 
-      {
-         "name": "Pix", 			
-        "allowsSplit": "disabled"
-      },
-      {
-        "name": "MasterCard", 			
-        "allowsSplit": "onCapture" 
-      },
-      {
-        "name": "American Express", 			
-        "allowsSplit": "onCapture" 
-      },
-      {
-        "name": "BankInvoice", 			
-        "allowsSplit": "onAuthorize" 
-      },
-      {
-        "name": "Privatelabels", 			
-        "allowsSplit": "disabled" 
-      },
-      {
-        "name": "Promissories", 			
-        "allowsSplit": "disabled" 
-      }
-    ]
+            
+        {
+  "name": "BBVA",
+  "paymentMethods": [
+    {
+      "name": "Visa",
+      "allowsSplit": "onCapture"
+    },
+    {
+      "name": "American Express",
+      "allowsSplit": "onCapture"
+    },
+    {
+      "name": "Diners",
+      "allowsSplit": "onCapture"
+    },
+    {
+      "name": "Elo",
+      "allowsSplit": "onCapture"
+    },
+    {
+      "name": "Hipercard",
+      "allowsSplit": "onCapture"
+    },
+    {
+      "name": "Mastercard",
+      "allowsSplit": "onCapture"
+    },
+    {
+      "name": "BankInvoice",
+      "allowsSplit": "onAuthorize"
+    }
+  ]
+}
+
    })
     
 
