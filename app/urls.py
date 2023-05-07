@@ -6,11 +6,13 @@ from app import views
 router = DefaultRouter()
 
 router.register(r"payment", views.PaymentViewSet, basename="Payment"),
+router.register(r"manifest", views.ManifestViewSet, basename="Manifest"),
+router.register(r"transactions", views.GenerateTransactionViewSet, basename="Transactions"),
+router.register(r"create_transaction", views.CreateTransactionViewSet, basename="Create transaction"),
+
 
 urlpatterns = [
-    path("list/", views.list.as_view(), name="List Methond"),
-    path("get_transaction/<str:idOrder>", views.GetTransaction.as_view(), name="Get Transaction"),
-    # path("payment", views.Payment.as_view(), name="Payment"),
-    path("manifest", views.Manifest.as_view(), name="Manifest"),
-    path("", include(router.urls)),
+    path("get_transaction/", views.GetTransaction.as_view(), name="Get transaction"),
+    path("", include(router.urls))
 ]
+    

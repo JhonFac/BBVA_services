@@ -5,113 +5,127 @@ from rest_framework.views import APIView
 from app.transactions import TransactionsMethod
 from rest_framework import viewsets
 
-from .models import Payment
-from .serializers import PaymentSerializer
+from .models import Manifest, PaymentMethods, Transaction
+from .serializers import ManifestSerializer, PaymentMethodsSerializer, TransactionSerializer, CreateTransaccionSerializer
 
 Tr=TransactionsMethod()
 
-class list(APIView):
 
-    # obtener orden
+# This is a class for creating a transaction using the Django REST framework in Python.
+class CreateTransaction(APIView):
+
+    serializer_class = TransactionSerializer
+
+    def post(self, request):
+
+        pymentMethod_serializer = TransactionSerializer(data=request.data)
+        if pymentMethod_serializer.is_valid():
+            pymentMethod_serializer.save()
+            return Response(pymentMethod_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(pymentMethod_serializer.errors)
+
+
+# This is a viewset class that handles creating transactions and returning a response.
+class CreateTransactionViewSet(viewsets.ModelViewSet):
+
+    serializer_class = CreateTransaccionSerializer
+
+    def get_queryset(self):
+        return Transaction.objects.all()
+
     def get(self, request):
-      return Response({
-        "paymentMethods": [
-          "BankInvoice",
-          "DebitCard",
-          "Pix",
-          "CreditCard",
-          "Promissories",
-          "Privatelabels",
-          "Cobranded",
-          "Cash"
-          ]
-      })
+      res=Tr.create_transactions()
+      return HttpResponse({res.text})
 
+
+# This is a Python class that retrieves transactions for a given order ID using an APIView.
 class GetTransaction(APIView):
 
-    # obtener orden
     def get(self, request, idOrder):
-      print(idOrder)
       res=Tr.get_transactions(idOrder)
       return HttpResponse({res.text})
 
-class Manifest(APIView):
+
+# This is a viewset class for generating transactions with a queryset of all transactions and a
+# serializer class for transactions.
+class GenerateTransactionViewSet(viewsets.ModelViewSet):
+    
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+
+# This is a viewset class for a Manifest model that allows for listing and creating Manifest objects.
+class ManifestViewSet(viewsets.ModelViewSet):
+
+    serializer_class = ManifestSerializer
+
+    def get_queryset(self):
+        return Manifest.objects.all()
 
     # listar
-    def get(self, *args):
-        return Response({
-    "paymentMethods": [
-      {
-        "name": "Visa", 			
-        "allowsSplit": "onCapture" 
-      }, 
-      {
-         "name": "Pix", 			
-        "allowsSplit": "disabled"
-      },
-      {
-        "name": "MasterCard", 			
-        "allowsSplit": "onCapture" 
-      },
-      {
-        "name": "American Express", 			
-        "allowsSplit": "onCapture" 
-      },
-      {
-        "name": "BankInvoice", 			
-        "allowsSplit": "onAuthorize" 
-      },
-      {
-        "name": "Privatelabels", 			
-        "allowsSplit": "disabled" 
-      },
-      {
-        "name": "Promissories", 			
-        "allowsSplit": "disabled" 
-      }
-    ]
-   })
+    def get(self, request):
+      manifest = Manifest.objects.all()
+      manifest_serializer = ManifestSerializer(manifest, many =True)
+      return Response(manifest_serializer.data)
+
+  #   def get(self, *args):
+  #       return Response({
+  #   "paymentMethods": [
+  #     {
+  #       "name": "Visa", 			
+  #       "allowsSplit": "onCapture" 
+  #     }, 
+  #     {
+  #        "name": "Pix", 			
+  #       "allowsSplit": "disabled"
+  #     },
+  #     {
+  #       "name": "MasterCard", 			
+  #       "allowsSplit": "onCapture" 
+  #     },
+  #     {
+  #       "name": "American Express", 			
+  #       "allowsSplit": "onCapture" 
+  #     },
+  #     {
+  #       "name": "BankInvoice", 			
+  #       "allowsSplit": "onAuthorize" 
+  #     },
+  #     {
+  #       "name": "Privatelabels", 			
+  #       "allowsSplit": "disabled" 
+  #     },
+  #     {
+  #       "name": "Promissories", 			
+  #       "allowsSplit": "disabled" 
+  #     }
+  #   ]
+  #  })
 
 
+    def post(self, request):
+        serializer = ManifestSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors)
+
+
+# This is a Django REST framework viewset for managing payment methods, with a POST method for
+# creating new payment methods.
 class PaymentViewSet(viewsets.ModelViewSet):
 
-    serializer_class = PaymentSerializer
-    def post(self, request):
-        # Obtener los datos del JSON enviado en el body
-        data = request.data
+    serializer_class = PaymentMethodsSerializer
 
-        # Serializar los datos
-        serializer = PaymentSerializer(data=data)
-        
-        # Validar los datos
-        if serializer.is_valid():
-            # Guardar los datos en el modelo Payment
-            payment = Payment(
-                external_id=data['external_id'],
-                callback_url=data['callback_url'],
-                merchant_id=data['values']['merchant_id'],
-                submerchant_id=data['values']['submerchant_id'],
-                company_name=data['values']['company_name'],
-                ruc=data['values']['ruc'],
-                currency=data['values']['currency'],
-                document_number=data['values']['document_number'],
-                document_type=data['values']['document_type'],
-                first_name=data['values']['first_name'],
-                last_name=data['values']['last_name'],
-                email=data['values']['email'],
-                country_code=data['values']['country_code'],
-                phone_number=data['values']['phone_number'],
-                payment_concept=data['values']['payment_concept'],
-                shipping_postal_code=data['values']['shipping_postal_code'],
-                shipping_address=data['values']['shipping_address'],
-                additional_data1=data['values']['additional_data1'],
-                additional_data2=data['values']['additional_data2'],
-                amount=data['amount']
-            )
-            payment.save()
-            
-            # Devolver una respuesta exitosa
-            return Response({'message': 'Payment created successfully'}, status=status.HTTP_201_CREATED)
-        else:
-            # Devolver una respuesta con errores de validación
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        return PaymentMethods.objects.all()
+
+    # Create Pyments
+    def post(self, request):
+
+        pymentMethod_serializer = PaymentMethodsSerializer(data=request.data)
+        if pymentMethod_serializer.is_valid():
+            pymentMethod_serializer.save()
+            return Response(pymentMethod_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(pymentMethod_serializer.errors)

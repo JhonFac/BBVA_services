@@ -16,6 +16,15 @@ class TransactionsMethod():
 
 
     def create_transactions(self, getPayload):
+        """
+        This function sends a POST request to create transactions using the provided payload and returns the
+        response.
+        
+        :param getPayload: It is a variable that contains the data payload to be sent in the HTTP POST
+        request to the specified URL. The contents of the payload depend on the specific API being used and
+        the data required by the server to process the request
+        :return: The function `create_transactions` is returning the `response` object.
+        """
 
         url = f"{self.baseUrl}/api/merchant-transactions"
         payload = getPayload 
@@ -30,7 +39,17 @@ class TransactionsMethod():
         
         return response
 
+
     def get_transactions(self,IdTransaction):
+        """
+        This function sends a GET request to retrieve a specific merchant transaction using its ID.
+        
+        :param IdTransaction: This is a parameter that represents the unique identifier of a transaction. It
+        is used to retrieve information about a specific transaction from the API
+        :return: the response object obtained from making a GET request to a specific URL with a given
+        transaction ID and headers. The response object contains information about the transaction.
+        """
+
         
         url = f"{self.baseUrl}/api/merchant-transactions/{IdTransaction}"
 
@@ -39,6 +58,7 @@ class TransactionsMethod():
         response = requests.request("GET", url, headers=headers, data=payload)
         print(response)
         return response 
+
 
     # document why this method is empty
     def List_payment_methods(self):
