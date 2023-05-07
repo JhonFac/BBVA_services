@@ -55,63 +55,54 @@ class GenerateTransactionViewSet(viewsets.ModelViewSet):
 
 
 # This is a viewset class for a Manifest model that allows for listing and creating Manifest objects.
-class ManifestViewSet(viewsets.ModelViewSet):
+class ManifestViewSet(APIView):
 
-    serializer_class = ManifestSerializer
+    # serializer_class = ManifestSerializer
 
-    def get_queryset(self):
-        return Manifest.objects.all()
+    # def get_queryset(self):
+    #     return Manifest.objects.all()
 
-    # listar
-    def get(self, request):
-      manifest = Manifest.objects.all()
-      manifest_serializer = ManifestSerializer(manifest, many =True)
-      return Response(manifest_serializer.data)
+    # # listar
+    # def get(self, request):
+    #   manifest = Manifest.objects.all()
+    #   manifest_serializer = ManifestSerializer(manifest, many =True)
+    #   return Response(manifest_serializer.data)
 
-  #   def get(self, *args):
-  #       return Response({
-  #   "paymentMethods": [
-  #     {
-  #       "name": "Visa", 			
-  #       "allowsSplit": "onCapture" 
-  #     }, 
-  #     {
-  #        "name": "Pix", 			
-  #       "allowsSplit": "disabled"
-  #     },
-  #     {
-  #       "name": "MasterCard", 			
-  #       "allowsSplit": "onCapture" 
-  #     },
-  #     {
-  #       "name": "American Express", 			
-  #       "allowsSplit": "onCapture" 
-  #     },
-  #     {
-  #       "name": "BankInvoice", 			
-  #       "allowsSplit": "onAuthorize" 
-  #     },
-  #     {
-  #       "name": "Privatelabels", 			
-  #       "allowsSplit": "disabled" 
-  #     },
-  #     {
-  #       "name": "Promissories", 			
-  #       "allowsSplit": "disabled" 
-  #     }
-  #   ]
-  #  })
-
-
-    def post(self, request):
-        serializer = ManifestSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors)
-
-
+    def get(self, *args):
+        return Response({
+    "paymentMethods": [
+      {
+        "name": "Visa", 			
+        "allowsSplit": "onCapture" 
+      }, 
+      {
+         "name": "Pix", 			
+        "allowsSplit": "disabled"
+      },
+      {
+        "name": "MasterCard", 			
+        "allowsSplit": "onCapture" 
+      },
+      {
+        "name": "American Express", 			
+        "allowsSplit": "onCapture" 
+      },
+      {
+        "name": "BankInvoice", 			
+        "allowsSplit": "onAuthorize" 
+      },
+      {
+        "name": "Privatelabels", 			
+        "allowsSplit": "disabled" 
+      },
+      {
+        "name": "Promissories", 			
+        "allowsSplit": "disabled" 
+      }
+    ]
+   })
+    
+    
 # This is a Django REST framework viewset for managing payment methods, with a POST method for
 # creating new payment methods.
 class PaymentViewSet(viewsets.ModelViewSet):
