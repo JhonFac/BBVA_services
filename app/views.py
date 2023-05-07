@@ -70,43 +70,41 @@ class ManifestViewSet(APIView):
 
 
     def get(self, *args):
-        return Response({
-            
+        return Response(
         {
-  "name": "BBVA",
-  "paymentMethods": [
-    {
-      "name": "Visa",
-      "allowsSplit": "onCapture"
-    },
-    {
-      "name": "American Express",
-      "allowsSplit": "onCapture"
-    },
-    {
-      "name": "Diners",
-      "allowsSplit": "onCapture"
-    },
-    {
-      "name": "Elo",
-      "allowsSplit": "onCapture"
-    },
-    {
-      "name": "Hipercard",
-      "allowsSplit": "onCapture"
-    },
-    {
-      "name": "Mastercard",
-      "allowsSplit": "onCapture"
-    },
-    {
-      "name": "BankInvoice",
-      "allowsSplit": "onAuthorize"
-    }
-  ]
-}
-
-   })
+            "name": "BBVA",
+            "paymentMethods": [
+            {
+            "name": "Visa",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "American Express",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Diners",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Elo",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Hipercard",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Mastercard",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "BankInvoice",
+            "allowsSplit": "onAuthorize"
+            }
+            ]
+        }
+   )
     
 
 # This is a Django REST framework viewset for managing payment methods, with a POST method for
