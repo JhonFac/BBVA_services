@@ -68,6 +68,7 @@ class ManifestViewSet(APIView):
     #   manifest_serializer = ManifestSerializer(manifest, many =True)
     #   return Response(manifest_serializer.data)
 
+
     def get(self, *args):
         return Response({
     "paymentMethods": [
@@ -102,7 +103,7 @@ class ManifestViewSet(APIView):
     ]
    })
     
-    
+
 # This is a Django REST framework viewset for managing payment methods, with a POST method for
 # creating new payment methods.
 class PaymentViewSet(viewsets.ModelViewSet):
