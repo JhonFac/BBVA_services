@@ -131,7 +131,39 @@ class ManifestViewSet(APIView):
 class PaymentViewSet(APIView):
 
     def get(self, request):
-        res={"paymentMethods":["Cuotealo","PagoEfectivo"]}
+        res={
+            "name": "BBVA",
+            "paymentMethods": [
+            {
+            "name": "Visa",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "American Express",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Diners",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Elo",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Hipercard",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "Mastercard",
+            "allowsSplit": "onCapture"
+            },
+            {
+            "name": "BankInvoice",
+            "allowsSplit": "onAuthorize"
+            }
+            ]
+        }
         return Response(res)
 
 
