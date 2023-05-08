@@ -127,18 +127,24 @@ class ManifestViewSet(APIView):
 
 # This is a Django REST framework viewset for managing payment methods, with a POST method for
 # creating new payment methods.
-class PaymentViewSet(viewsets.ModelViewSet):
+# class PaymentViewSet(viewsets.ModelViewSet):
+class PaymentViewSet(APIView):
 
-    serializer_class = PaymentMethodsSerializer
+    def get(self, request):
+        res={"paymentMethods":["Cuotealo","PagoEfectivo"]}
+        return Response(res)
 
-    def get_queryset(self):
-        return PaymentMethods.objects.all()
 
-    # Create Pyments
-    def post(self, request):
+    # serializer_class = PaymentMethodsSerializer
 
-        pymentMethod_serializer = PaymentMethodsSerializer(data=request.data)
-        if pymentMethod_serializer.is_valid():
-            pymentMethod_serializer.save()
-            return Response(pymentMethod_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(pymentMethod_serializer.errors)
+    # def get_queryset(self):
+    #     return PaymentMethods.objects.all()
+
+    # # Create Pyments
+    # def post(self, request):
+
+    #     pymentMethod_serializer = PaymentMethodsSerializer(data=request.data)
+    #     if pymentMethod_serializer.is_valid():
+    #         pymentMethod_serializer.save()
+    #         return Response(pymentMethod_serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(pymentMethod_serializer.errors)
