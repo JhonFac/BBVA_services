@@ -1,5 +1,6 @@
 import os
 import requests
+import json
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -9,10 +10,6 @@ class TransactionsMethod():
         
         self.baseUrl= os.getenv('URL_BASE')
         self.token= os.getenv('TOKEN')
-        self.headers ={
-        'Authorization': self.token,
-        'x-mock-response-code': '200'
-        }
 
 
     def create_transactions(self, getPayload):
@@ -26,39 +23,46 @@ class TransactionsMethod():
         :return: The function `create_transactions` is returning the `response` object.
         """
 
+        headers = {
+        'Content-Type': 'application/json',
+        'Authorization': self.token,
+        'x-mock-response-code': '201'
+        }
+
         url = f"{self.baseUrl}/api/merchant-transactions"
-        payload = getPayload 
-        headers = self.headers
+        payload =  json.dumps(getPayload)
         response = requests.request("POST", url, headers=headers, data=payload)
 
-        if 200 <= response.status_code <= 250:
-            print(response.status_code)
-            print(response.text)
-        else:
-            print(response.status_code)
+
         
         return response
 
 
     def get_transactions(self,IdTransaction):
         """
-        This function sends a GET request to retrieve a specific merchant transaction using its ID.
+        This function retrieves transaction information from a merchant API using a specified transaction ID
+        and returns an error message if there is one.
         
-        :param IdTransaction: This is a parameter that represents the unique identifier of a transaction. It
-        is used to retrieve information about a specific transaction from the API
-        :return: the response object obtained from making a GET request to a specific URL with a given
-        transaction ID and headers. The response object contains information about the transaction.
+        :param IdTransaction: The unique identifier of a transaction that you want to retrieve information
+        for
+        :return: an error message if there is an error in the response from the API, otherwise it is
+        returning the response text.
         """
 
-        
         url = f"{self.baseUrl}/api/merchant-transactions/{IdTransaction}"
 
         payload={}
-        headers = self.headers
+        headers ={
+        'Authorization': self.token
+        }
         response = requests.request("GET", url, headers=headers, data=payload)
-        print(response)
-        return response 
 
+        try:
+            res=json.loads(response.text)
+            return res['error']['message']
+        except Exception as e:
+            print(e)
+            return response.text
 
     # document why this method is empty
     def List_payment_methods(self):

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from app.transactions import TransactionsMethod
 from rest_framework import viewsets
-
+import json
 from .models import Manifest, PaymentMethods, Transaction
 from .serializers import ManifestSerializer, PaymentMethodsSerializer, TransactionSerializer, CreateTransaccionSerializer
 
@@ -14,36 +14,54 @@ Tr=TransactionsMethod()
 # This is a class for creating a transaction using the Django REST framework in Python.
 class CreateTransaction(APIView):
 
-    serializer_class = TransactionSerializer
+    # serializer_class = TransactionSerializer
+    # serializer_class = CreateTransaccionSerializer
+
+    def get(self):
+        return Transaction.objects.all()
 
     def post(self, request):
 
+        # return HttpResponse({res.text})
+
         pymentMethod_serializer = TransactionSerializer(data=request.data)
         if pymentMethod_serializer.is_valid():
-            pymentMethod_serializer.save()
-            return Response(pymentMethod_serializer.data, status=status.HTTP_201_CREATED)
+
+            data=request.data
+            res=Tr.create_transactions(data)
+
+            if 200 <= res.status_code <= 250:
+                print(res.status_code)
+                print(res.text)
+                pymentMethod_serializer.save()
+                response=json.loads(res.text)
+                return Response(response, status=status.HTTP_201_CREATED)
+
+            else:
+                print(res.status_code)
+                return Response(res.status_code, status=status.HTTP_201_CREATED)
+
         return Response(pymentMethod_serializer.errors)
 
 
 # This is a viewset class that handles creating transactions and returning a response.
-class CreateTransactionViewSet(viewsets.ModelViewSet):
+# class CreateTransactionViewSet(viewsets.ModelViewSet):
 
-    serializer_class = CreateTransaccionSerializer
+#     # serializer_class = CreateTransaccionSerializer
+#     serializer_class = TransactionSerializer
 
-    def get_queryset(self):
-        return Transaction.objects.all()
+#     def get_queryset(self):
+#         return Transaction.objects.all()
 
-    def get(self, request):
-      res=Tr.create_transactions()
-      return HttpResponse({res.text})
 
 
 # This is a Python class that retrieves transactions for a given order ID using an APIView.
 class GetTransaction(APIView):
 
     def get(self, request, idOrder):
+      print(idOrder)
       res=Tr.get_transactions(idOrder)
-      return HttpResponse({res.text})
+      return HttpResponse({res})
 
 
 # This is a viewset class for generating transactions with a queryset of all transactions and a
