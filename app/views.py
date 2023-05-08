@@ -7,7 +7,7 @@ from rest_framework import viewsets
 import json
 from .models import Manifest, PaymentMethods, Transaction
 from .serializers import ManifestSerializer, PaymentMethodsSerializer, TransactionSerializer, CreateTransaccionSerializer
-
+from django.http import JsonResponse
 Tr=TransactionsMethod()
 
 
@@ -88,8 +88,7 @@ class ManifestViewSet(APIView):
 
 
     def get(self, *args):
-        return Response(
-        {
+        res={
             "name": "BBVA",
             "paymentMethods": [
             {
@@ -122,8 +121,8 @@ class ManifestViewSet(APIView):
             }
             ]
         }
-   )
-    
+        return HttpResponse({res})
+
 
 # This is a Django REST framework viewset for managing payment methods, with a POST method for
 # creating new payment methods.
@@ -164,7 +163,7 @@ class PaymentViewSet(APIView):
             }
             ]
         }
-        return Response(res)
+        return JsonResponse(res)
 
 
     # serializer_class = PaymentMethodsSerializer
