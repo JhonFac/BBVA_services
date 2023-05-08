@@ -43,7 +43,6 @@ class CreateTransaction(APIView):
 
         return Response(pymentMethod_serializer.errors)
 
-
 # This is a viewset class that handles creating transactions and returning a response.
 # class CreateTransactionViewSet(viewsets.ModelViewSet):
 
