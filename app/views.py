@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +7,6 @@ from rest_framework import viewsets
 import json
 from .models import Manifest, PaymentMethods, Transaction
 from .serializers import ManifestSerializer, PaymentMethodsSerializer, TransactionSerializer, CreateTransaccionSerializer
-from django.http import JsonResponse
 Tr=TransactionsMethod()
 
 
@@ -87,40 +86,9 @@ class ManifestViewSet(APIView):
 
 
     def get(self, *args):
-        res={
-            "name": "BBVA",
-            "paymentMethods": [
-            {
-            "name": "Visa",
-            "allowsSplit": "onCapture"
-            },
-            {
-            "name": "American Express",
-            "allowsSplit": "onCapture"
-            },
-            {
-            "name": "Diners",
-            "allowsSplit": "onCapture"
-            },
-            {
-            "name": "Elo",
-            "allowsSplit": "onCapture"
-            },
-            {
-            "name": "Hipercard",
-            "allowsSplit": "onCapture"
-            },
-            {
-            "name": "Mastercard",
-            "allowsSplit": "onCapture"
-            },
-            {
-            "name": "BankInvoice",
-            "allowsSplit": "onAuthorize"
-            }
-            ]
-        }
-        return HttpResponse({res})
+        res={"paymentMethods":[{"name":"Cuotealo","allowsSplit":"onAuthorize"},{"name":"PagoEfectivo","allowsSplit":"onAuthorize"}],"customFields":[{"name":"AccesKey","type":"text"},{"name":"SecretKey","type":"text"},{"name":"TradeID","type":"text"},{"name":"TradeName","type":"text"},{"name":"TradeEmail","type":"text"},{"name":"Country","type":"select","options":[{"text":"Perú","value":"PE"}]},{"name":"Currency","type":"select","options":[{"text":"Soles","value":"PEN"},{"text":"Dólares","value":"USD"}]}],"autoSettleDelay":{"minimum":"0","maximum":"720"}}
+        return JsonResponse(res)
+    
 
 
 # This is a Django REST framework viewset for managing payment methods, with a POST method for
@@ -131,6 +99,9 @@ class PaymentViewSet(APIView):
     def get(self, request):
         res={"paymentMethods":["Cuotealo","PagoEfectivo"]}
         return JsonResponse(res)
+
+        # return HttpResponse({res})
+
 
 
     # serializer_class = PaymentMethodsSerializer
