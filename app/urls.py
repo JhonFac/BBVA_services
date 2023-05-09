@@ -13,7 +13,7 @@ router = DefaultRouter()
 urlpatterns = [
     # path("get_transaction/<str:idOrder>/", views.GetTransaction.as_view(), name="Get transaction"),
     # path("create_transaction/", views.CreateTransaction.as_view(), name="Create transaction"),
-    # path("manifest/", views.ManifestViewSet.as_view(), name="manifest"),
+    path("manifest/", views.ManifestViewSet.as_view(), name="manifest"),
     path("payment-methods/", views.PaymentViewSet.as_view(), name="manifest"),
     path("", include(router.urls))
 ]
