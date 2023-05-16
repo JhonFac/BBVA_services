@@ -2,14 +2,10 @@ version: "3.8"
 
 services:
     web:
-        image: 'jc21/nginx-proxy-manager:latest'
         build: .
         ports:
-            - '80:8000'
-            - '443:443'
+            - "8000:8000"
         volumes:
+            - /etc/ssl/certs:/etc/ssl/certs:ro
+            - /etc/ssl/private:/etc/ssl/private:ro
             - .:/code
-            - ./letsencrypt:/etc/letsencrypt
-        # command: >
-        #     sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8080"
-        

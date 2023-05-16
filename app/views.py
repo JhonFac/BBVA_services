@@ -58,8 +58,8 @@ class GetTransaction(APIView):
 
     def get(self, request, idOrder):
       print(idOrder)
-      res=Tr.get_transactions(idOrder)
-      return HttpResponse({res})
+    #   res=Tr.get_transactions(idOrder)
+    #   return HttpResponse({res})
 
 
 # This is a viewset class for generating transactions with a queryset of all transactions and a
@@ -88,7 +88,6 @@ class ManifestViewSet(APIView):
     def get(self, *args):
         res={"paymentMethods":[{"name":"Cuotealo","allowsSplit":"onAuthorize"},{"name":"PagoEfectivo","allowsSplit":"onAuthorize"}],"customFields":[{"name":"AccesKey","type":"text"},{"name":"SecretKey","type":"text"},{"name":"TradeID","type":"text"},{"name":"TradeName","type":"text"},{"name":"TradeEmail","type":"text"},{"name":"Country","type":"select","options":[{"text":"Perú","value":"PE"}]},{"name":"Currency","type":"select","options":[{"text":"Soles","value":"PEN"},{"text":"Dólares","value":"USD"}]}],"autoSettleDelay":{"minimum":"0","maximum":"720"}}
         return JsonResponse(res)
-    
 
 
 # This is a Django REST framework viewset for managing payment methods, with a POST method for

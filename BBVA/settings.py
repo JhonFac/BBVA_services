@@ -24,9 +24,36 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rc^*w^w&6g9_(uvx#6s*bnt!w)l0rdi%!l7mv#y%uc&x%wo5pk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["*"]
+
+#CERT_DIR = os.path.join(os.path.dirname(BASE_DIR), 'scripts')
+
+if DEBUG:
+    # Configuración para desarrollo sin HTTPS
+    ALLOWED_HOSTS = ['*']
+
+else:
+    # Configuración para producción con HTTPS
+
+    ALLOWED_HOSTS = ['*']
+
+    SSL_CERTIFICATE = '/fullchain.pem'
+    SSL_PRIVATE_KEY = '/privkey.pem'
+
+    # Configuración para HTTPS
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+
 
 # FORM SUBMISSION
 # Comment out the following line and place your railway URL, and your production URL in the array.
