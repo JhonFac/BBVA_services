@@ -6,6 +6,4 @@ services:
         ports:
             - "443:443"
         volumes:
-            - /etc/ssl/certs:/etc/ssl/certs:ro
-            - /etc/ssl/private:/etc/ssl/private:ro
             - .:/code

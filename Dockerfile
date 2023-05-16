@@ -20,8 +20,8 @@ RUN mkdir /code
 WORKDIR /code
 COPY . /code/
 
-COPY ./fullchain.pem /etc/ssl/certs/fullchain.pem
-COPY ./privkey.pem /etc/ssl/private/privkey.pem
+# COPY ./fullchain.pem /etc/ssl/certs/fullchain.pem
+# COPY ./privkey.pem /etc/ssl/private/privkey.pem
 
 COPY ./scripts /scripts/
 RUN chmod +x /scripts/*
