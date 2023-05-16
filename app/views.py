@@ -58,8 +58,8 @@ class GetTransaction(APIView):
 
     def get(self, request, idOrder):
       print(idOrder)
-    #   res=Tr.get_transactions(idOrder)
-    #   return HttpResponse({res})
+      res=Tr.get_transactions(idOrder)
+      return HttpResponse({res})
 
 
 # This is a viewset class for generating transactions with a queryset of all transactions and a

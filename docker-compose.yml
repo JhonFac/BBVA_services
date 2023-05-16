@@ -4,7 +4,7 @@ services:
     web:
         build: .
         ports:
-            - "8000:8000"
+            - "443:443"
         volumes:
             - /etc/ssl/certs:/etc/ssl/certs:ro
             - /etc/ssl/private:/etc/ssl/private:ro

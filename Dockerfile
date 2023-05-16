@@ -20,13 +20,15 @@ RUN mkdir /code
 WORKDIR /code
 COPY . /code/
 
-#COPY ./fullchain.pem /etc/ssl/certs/fullchain.pem
-#COPY ./privkey.pem /etc/ssl/private/privkey.pem
+COPY ./fullchain.pem /etc/ssl/certs/fullchain.pem
+COPY ./privkey.pem /etc/ssl/private/privkey.pem
 
 COPY ./scripts /scripts/
 RUN chmod +x /scripts/*
 RUN apk add --no-cache dos2unix
 RUN dos2unix /scripts/entrypoint.sh
+
+EXPOSE 443
 
 CMD ["sh", "/scripts/entrypoint.sh"]
 #CMD ["tail", "-f", "/dev/null"]

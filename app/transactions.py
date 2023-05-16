@@ -68,3 +68,6 @@ class TransactionsMethod():
     def List_payment_methods(self):
         pass
 
+
+t=TransactionsMethod()
+t.get_transactions('f96ceae6-9d9a-4374-97af-f0b5efb64dd8')
